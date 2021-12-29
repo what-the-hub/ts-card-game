@@ -1,1 +1,10 @@
-### Init commit
+### inheritance
+
+***
+### encapsulation
+
+***
+### polymorphism
+
+***
+### abstraction
