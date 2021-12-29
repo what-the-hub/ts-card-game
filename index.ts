@@ -4,19 +4,29 @@ n = setTimeout(saySomething, 1000)
 function saySomething(): void {
     console.log('Hello')
 }*/
+class Points {
+    score: number = 0
+    increase(points: number){
+        this.score += points
+    }
+    decrease(points: number){
+        this.score -= points
+    }
+    getScore(){
+        return this.score
+    }
+}
+
+let score = new Points()
+
 abstract class Card {
     protected constructor(protected cardSymbol: string) {
     }
-
-    protected getSymbol() {
+    getSymbol() {
         console.log(this.cardSymbol)
     }
-
     abstract effect(): void
 }
-
-
-
 
 class EffectCard extends Card {
     constructor(protected cardSymbol: string) {
@@ -27,7 +37,6 @@ class EffectCard extends Card {
     }
     callNext () {
         console.log('random effect')
-
     }
 }
 
@@ -39,7 +48,9 @@ class IncreaseCard extends Card {
         this.increasePoints()
     }
     increasePoints () {
+        score.increase(20)
         console.log('increase effect')
+        console.log(score.getScore())
 
     }
 }
@@ -53,26 +64,33 @@ class DecreaseCard extends Card {
         //console.log('decrease effect')
     }
     decreasePoints() {
+
         console.log('decrease effect')
+        score.decrease(120)
+        console.log(score.getScore())
     }
 }
 
 
-let myCard1 = new IncreaseCard('a')
 
-let myCard2 = new EffectCard('b')
+let myArr = [new IncreaseCard('a'), new DecreaseCard('b'), new EffectCard('c')]
+let classes = []
 
-let myCard3 = new DecreaseCard('c')
-
-
-function getRandomSymbol (): string {
-    const symbols: string[] = ['A', 'B', 'C'] //enum
-    const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)]
-    return randomSymbol
+for (let i = 0; i<6; i++){
+    classes.push(myArr[Math.floor(Math.random() * myArr.length)])
 }
 
 
-function getAllFuncs(toCheck: any) {
+
+/*let myCard1 = new IncreaseCard('a')
+let myCard2 = new EffectCard('b')
+let myCard3 = new DecreaseCard('c')*/
+/*function getRandomSymbol (): string {
+    const symbols: string[] = ['A', 'B', 'C'] //enum
+    const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)]
+    return randomSymbol
+}*/
+/*function getAllFuncs(toCheck: any) {
     const props = [];
     let obj = toCheck;
     do {
@@ -82,10 +100,7 @@ function getAllFuncs(toCheck: any) {
     return props.sort().filter((e, i, arr) => {
         if (e!=arr[i+1] && typeof toCheck[e] == 'function') return true;
     });
-}
-
-//getAllFuncs(myCard1)
-
+}*/
 /*let effectsMap = new Map<string, Function>()
 effectsMap.set('increase', increase)
     .set('decrease', decrease)
@@ -95,6 +110,6 @@ effectsMap.set('increase', increase)
     return randomEffect
 }*/
 
-
-console.log(myCard3.effect())
-console.log(myCard1.effect())
+for (let i = 0; i<classes.length; i++){
+    classes[i].effect()
+}
