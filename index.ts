@@ -7,18 +7,27 @@ function saySomething(): void {
 abstract class Card {
     protected constructor(protected cardSymbol: string) {
     }
-    protected getSymbol(){
+
+    protected getSymbol() {
         console.log(this.cardSymbol)
     }
+
+    abstract effect(): void
 }
+
+
 
 
 class EffectCard extends Card {
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
     }
-    setEffect() {
+    effect() {
+        this.callNext()
+    }
+    callNext () {
         console.log('random effect')
+
     }
 }
 
@@ -26,14 +35,22 @@ class IncreaseCard extends Card {
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
     }
-    increasePoints() {
+    effect() {
+        this.increasePoints()
+    }
+    increasePoints () {
         console.log('increase effect')
+
     }
 }
 
 class DecreaseCard extends Card {
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
+    }
+    effect() {
+        this.decreasePoints()
+        //console.log('decrease effect')
     }
     decreasePoints() {
         console.log('decrease effect')
@@ -67,7 +84,7 @@ function getAllFuncs(toCheck: any) {
     });
 }
 
-getAllFuncs(myCard1)
+//getAllFuncs(myCard1)
 
 /*let effectsMap = new Map<string, Function>()
 effectsMap.set('increase', increase)
@@ -79,5 +96,5 @@ effectsMap.set('increase', increase)
 }*/
 
 
-
-console.log(getAllFuncs(myCard1))
+console.log(myCard3.effect())
+console.log(myCard1.effect())
