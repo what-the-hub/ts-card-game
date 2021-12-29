@@ -22,20 +22,24 @@ let score = new Points()
 abstract class Card {
     protected constructor(protected cardSymbol: string) {
     }
-    getSymbol() {
-        console.log(this.cardSymbol)
+    get symbol() {
+        return this.cardSymbol
     }
-    abstract effect(): void
+    abstract effect(i:number): void
 }
 
 class EffectCard extends Card {
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
     }
-    effect() {
+    effect(i:number) {
         this.callNext()
+        //console.log(i)
+        run('b')
+        return 1
     }
     callNext () {
+
         console.log('random effect')
     }
 }
@@ -44,7 +48,8 @@ class IncreaseCard extends Card {
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
     }
-    effect() {
+    effect(i:number) {
+        //console.log(i)
         this.increasePoints()
     }
     increasePoints () {
@@ -59,7 +64,8 @@ class DecreaseCard extends Card {
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
     }
-    effect() {
+    effect(i:number) {
+        //console.log(i)
         this.decreasePoints()
         //console.log('decrease effect')
     }
@@ -74,13 +80,16 @@ class DecreaseCard extends Card {
 
 
 let myArr = [new IncreaseCard('a'), new DecreaseCard('b'), new EffectCard('c')]
-let classes = []
+//let classes: any[] = []
+
+let classes: any[] = []
 
 for (let i = 0; i<6; i++){
     classes.push(myArr[Math.floor(Math.random() * myArr.length)])
 }
 
 
+let tempClasses = classes
 
 /*let myCard1 = new IncreaseCard('a')
 let myCard2 = new EffectCard('b')
@@ -110,6 +119,21 @@ effectsMap.set('increase', increase)
     return randomEffect
 }*/
 
-for (let i = 0; i<classes.length; i++){
-    classes[i].effect()
+let enteredSymbol = 'c'
+function run (symbol:string) {
+    for (let i = 0; i<classes.length; i++){
+        //console.log(classes[i].symbol)
+        if (classes[i].symbol === symbol){
+            //console.log(classes[i])
+            classes[i].effect(i)
+            tempClasses = tempClasses.filter(el => el != classes[i])
+        }
+        /*    classes[i].effect(i)
+            if (classes[i].effect(i) === 1){
+                console.log(';;;;')
+            }*/
+    }
 }
+
+run(enteredSymbol)
+console.log(tempClasses)
