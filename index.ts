@@ -6,53 +6,94 @@ function saySomething(): void {
 }*/
 class Points {
     score: number = 0
-    increase(points: number){
+
+    increase(points: number) {
         this.score += points
     }
-    decrease(points: number){
+
+    decrease(points: number) {
         this.score -= points
     }
-    getScore(){
+
+    getScore() {
         return this.score
     }
 }
 
 let score = new Points()
 
-abstract class Card {
-    protected constructor(protected cardSymbol: string) {
+class Game {
+    classes: any[]
+    str: string = 'sssss'
+    flag: number = 0
+
+    constructor() {
+        this.classes = [
+            new IncreaseCard('b'),
+            new IncreaseCard('a'),
+            new EffectCard('b'),
+            new DecreaseCard('c'),
+            new IncreaseCard('c'),
+            new IncreaseCard('b')
+        ]
     }
+
+    run(symbol: string) {
+        console.log(this.classes)
+        let activeCads: Card[] = []
+        this.classes = this.classes.filter((el:Card) => {
+            if (el.symbol !== symbol) {
+                return el
+            } else {
+                activeCads.push(el)
+            }
+        })
+        console.log(this.classes, 'old')
+        console.log(activeCads, 'new')
+        activeCads.forEach((el: any) => el.effect())
+    }
+}
+
+
+abstract class Card {
+    protected constructor(protected cardSymbol: string, protected addClass: any | undefined) {
+    }
+
     get symbol() {
         return this.cardSymbol
     }
-    abstract effect(i:number): void
+
+    abstract effect(i: number): void
 }
+
 
 class EffectCard extends Card {
     constructor(protected cardSymbol: string) {
-        super(cardSymbol);
+        super(cardSymbol, undefined);
     }
-    effect(i:number) {
+
+    effect(i: number | []) {
         this.callNext()
         //console.log(i)
-        run('b')
-        return 1
     }
-    callNext () {
 
+    callNext() {
         console.log('random effect')
+        game.run('c')
     }
 }
 
 class IncreaseCard extends Card {
     constructor(protected cardSymbol: string) {
-        super(cardSymbol);
+        super(cardSymbol, undefined);
     }
-    effect(i:number) {
+
+    effect(i: number) {
         //console.log(i)
         this.increasePoints()
     }
-    increasePoints () {
+
+    increasePoints() {
         score.increase(20)
         console.log('increase effect')
         console.log(score.getScore())
@@ -62,13 +103,15 @@ class IncreaseCard extends Card {
 
 class DecreaseCard extends Card {
     constructor(protected cardSymbol: string) {
-        super(cardSymbol);
+        super(cardSymbol, undefined);
     }
-    effect(i:number) {
+
+    effect(i: number) {
         //console.log(i)
         this.decreasePoints()
         //console.log('decrease effect')
     }
+
     decreasePoints() {
 
         console.log('decrease effect')
@@ -78,18 +121,25 @@ class DecreaseCard extends Card {
 }
 
 
-
 let myArr = [new IncreaseCard('a'), new DecreaseCard('b'), new EffectCard('c')]
 //let classes: any[] = []
 
-let classes: any[] = []
+/*let classes: any[] = [
+    new IncreaseCard('b'),
+    new IncreaseCard('a'),
+    new EffectCard('b'),
+    new DecreaseCard('c'),
+    new IncreaseCard('c'),
+    new IncreaseCard('b')
 
-for (let i = 0; i<6; i++){
+]*/
+
+/*for (let i = 0; i<6; i++){
     classes.push(myArr[Math.floor(Math.random() * myArr.length)])
-}
+}*/
 
 
-let tempClasses = classes
+//let notActiveClasses = classes
 
 /*let myCard1 = new IncreaseCard('a')
 let myCard2 = new EffectCard('b')
@@ -119,21 +169,22 @@ effectsMap.set('increase', increase)
     return randomEffect
 }*/
 
-let enteredSymbol = 'c'
-function run (symbol:string) {
+let enteredSymbol = 'b'
+/*function run (symbol:string) {
     for (let i = 0; i<classes.length; i++){
         //console.log(classes[i].symbol)
         if (classes[i].symbol === symbol){
             //console.log(classes[i])
             classes[i].effect(i)
-            tempClasses = tempClasses.filter(el => el != classes[i])
+            notActiveClasses = notActiveClasses.filter(el => el != classes[i])
         }
-        /*    classes[i].effect(i)
+        /!*    classes[i].effect(i)
             if (classes[i].effect(i) === 1){
                 console.log(';;;;')
-            }*/
+            }*!/
     }
-}
+}*/
+const game = new Game()
 
-run(enteredSymbol)
-console.log(tempClasses)
+console.log(game.run(enteredSymbol))
+//console.log(notActiveClasses)
