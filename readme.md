@@ -14,3 +14,13 @@ General algorithm is:
 3. play cards with other symbol (single one)
 
 Only cards with a **symbol**, which user has entered, play their **effects**. **But some of this effects can trigger another symbol**, which will make cards with this symbol play next.
+
+
+***
+### How to check this task
+for enabling directly execute TypeScript on Node.js without precompiling
+
+`npm install -g ts-node typescript '@types/node'`
+
+after install you can run
+`...$ ts-node index.ts ` and get result into terminal
