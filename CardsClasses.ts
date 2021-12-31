@@ -1,9 +1,7 @@
 import {score, game} from "./GameClasses";
 
 export abstract class Card {
-    protected constructor(protected cardSymbol: string) {
-        this.cardSymbol = cardSymbol.toLowerCase()
-    }
+    protected constructor(protected cardSymbol: string) {}
 
     get symbol() {
         return this.cardSymbol
@@ -21,7 +19,7 @@ export class EffectCard extends Card {
         this.callNext()
     }
 
-    callNext() {
+    private callNext() {
         const check = (receivedSymb: string) => {
             if (receivedSymb !== this.symbol){
                 console.log(`|${this.symbol}| CALL ${receivedSymb} card`)
@@ -42,10 +40,9 @@ export class IncreaseCard extends Card {
         this.increasePoints()
     }
 
-    increasePoints() {
-        const points = game.getPoints(1,10)
-        score.increase(points)
-        console.log(`|${this.symbol}| card INCREASED ${points} points`)
+    private increasePoints() {
+        score.increase()
+        console.log(`|${this.symbol}| card INCREASED ${score.currentPoints} points`)
         console.log(`Total score: ${score.currentScore}`)
     }
 }
@@ -59,10 +56,9 @@ export class DecreaseCard extends Card {
         this.decreasePoints()
     }
 
-    decreasePoints() {
-        const points = game.getPoints(1,10)
-        score.decrease(points)
-        console.log(`|${this.symbol}| card DECREASED ${points} points`)
+    private decreasePoints() {
+        score.decrease()
+        console.log(`|${this.symbol}| card DECREASED ${score.currentPoints} points`)
         console.log(`Total score: ${score.currentScore}`)
     }
 }
