@@ -1,10 +1,8 @@
-import {score, game} from "./GameClass";
-
-
-
+import {score, game} from "./GameClasses";
 
 export abstract class Card {
     protected constructor(protected cardSymbol: string) {
+        this.cardSymbol = cardSymbol.toLowerCase()
     }
 
     get symbol() {
@@ -13,23 +11,25 @@ export abstract class Card {
 
     abstract effect(): void
 }
+
 export class EffectCard extends Card {
-    private arr: string[] = ['c', 'a']
-    private i: number = 0
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
     }
 
     effect() {
         this.callNext()
-        //console.log(i)
     }
 
     callNext() {
-        console.log(`${this.symbol} card has CALL EFFECT`)
-        game.run(this.arr[this.i])
-        this.i +=1
-        console.log(this.i, 'iiii')
+        const check = (receivedSymb: string) => {
+            if (receivedSymb !== this.symbol){
+                console.log(`|${this.symbol}| CALL ${receivedSymb} card`)
+                game.run(receivedSymb)
+            }
+            else check(game.getRandomSymbol())
+        }
+        check(game.getRandomSymbol())
     }
 }
 
@@ -39,15 +39,14 @@ export class IncreaseCard extends Card {
     }
 
     effect() {
-        //console.log(i)
         this.increasePoints()
     }
 
     increasePoints() {
-        score.increase(20)
-        console.log(`${this.symbol} card has INCREASE EFFECT`)
-        console.log(score.currentScore)
-
+        const points = game.getPoints(1,10)
+        score.increase(points)
+        console.log(`|${this.symbol}| card INCREASED ${points} points`)
+        console.log(`Total score: ${score.currentScore}`)
     }
 }
 
@@ -57,15 +56,13 @@ export class DecreaseCard extends Card {
     }
 
     effect() {
-        //console.log(i)
         this.decreasePoints()
-        //console.log('decrease effect')
     }
 
     decreasePoints() {
-
-        console.log(`${this.symbol} card has DECREASE EFFECT`)
-        score.decrease(120)
-        console.log(score.currentScore)
+        const points = game.getPoints(1,10)
+        score.decrease(points)
+        console.log(`|${this.symbol}| card DECREASED ${points} points`)
+        console.log(`Total score: ${score.currentScore}`)
     }
 }

@@ -1,6 +1,6 @@
 import {Card, DecreaseCard, EffectCard, IncreaseCard} from "./CardsClasses";
 
-export class Points {
+class Points {
     score: number = 0
 
     increase(points: number) {
@@ -16,17 +16,15 @@ export class Points {
     }
 }
 
-
-export class Game {
+class Game {
     cards: Card[]
-
     constructor() {
         this.cards = this.getDeck(6, 10)
     }
-// интерфейс для эффектов
 
     run(symbol: string) {
-        console.log(this.cards)
+        if (this.cards) console.log(this.cards)
+
         let activeCads: Card[] = []
         this.cards = this.cards.filter((el: Card) => {
             if (el.symbol !== symbol) {
@@ -35,33 +33,44 @@ export class Game {
                 activeCads.push(el)
             }
         })
-        console.log(this.cards, 'old')
-        console.log(activeCads, 'new')
-        activeCads.forEach((el: any) => el.effect())
+
+        activeCads.forEach((el) => {
+            el.effect()
+        })
+        console.log('----------')
+        return `TOTAL SCORE: ${score.score}`
     }
-    private getRandomSymbol(): string {
-        enum Symbols{
+
+    public getRandomSymbol(): string {
+        enum Symbols {
             'A' = 0,
             'B' = 1,
             'C' = 2
         }
-        return Symbols[Math.floor(Math.random()*3)]
+
+        return Symbols[Math.floor(Math.random() * 3)]
     }
+
     private getRandomCard(): Card {
         const cards: Card[] = [
             new IncreaseCard(this.getRandomSymbol()),
             new DecreaseCard(this.getRandomSymbol()),
             new EffectCard(this.getRandomSymbol()),
         ]
-        return cards[Math.floor(Math.random()*cards.length)]
+        return cards[Math.floor(Math.random() * cards.length)]
     }
+
     getDeck(min: number, max: number): Card[] {
         const cards: Card[] = []
-        let cardsCounter: number = Math.floor(Math.random()*(max-min) + min)
-        for (let i = 0; i<cardsCounter; i++){
+        let cardsCounter: number = Math.floor(Math.random() * (max - min) + min)
+        for (let i = 0; i < cardsCounter; i++) {
             cards.push(this.getRandomCard())
         }
         return cards
+    }
+
+    getPoints(min: number, max: number): number {
+        return Math.floor(Math.random() * (max - min) + min)
     }
 }
 
