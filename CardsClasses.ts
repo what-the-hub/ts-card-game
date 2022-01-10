@@ -11,7 +11,7 @@ export abstract class Card {
     abstract effect(): void
 }
 
-export class EffectCard extends Card {
+export class CallCard extends Card {
     constructor(protected cardSymbol: string) {
         super(cardSymbol);
     }

@@ -1,4 +1,4 @@
-import {Card, DecreaseCard, EffectCard, IncreaseCard} from "./CardsClasses";
+import {CallCard, Card, DecreaseCard, IncreaseCard} from "./CardsClasses";
 import {Symbols} from "./types";
 
 class Points {
@@ -77,7 +77,7 @@ class Game {
         const cards: Card[] = [
             new IncreaseCard(this.getRandomSymbol()),
             new DecreaseCard(this.getRandomSymbol()),
-            new EffectCard(this.getRandomSymbol()),
+            new CallCard(this.getRandomSymbol()),
         ]
 
         return cards[Math.floor(Math.random() * cards.length)]
@@ -95,6 +95,5 @@ class Game {
         return cards
     }
 }
-
 
 export const game = new Game(new Points())
