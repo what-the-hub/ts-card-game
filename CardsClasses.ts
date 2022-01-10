@@ -1,6 +1,6 @@
 import {game} from "./GameClasses";
 
-export abstract class Card {
+abstract class Card {
     protected constructor(protected cardSymbol: string) {
     }
 
@@ -8,7 +8,7 @@ export abstract class Card {
         return this.cardSymbol
     }
 
-    abstract effect(): void
+    protected abstract effect(): void
 }
 
 export class EffectCard extends Card {
