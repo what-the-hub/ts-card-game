@@ -2,16 +2,20 @@ import {Card, DecreaseCard, EffectCard, IncreaseCard} from "./CardsClasses";
 
 class Points {
     private score: number = 0
-    private points: number = this.getPoints(6, 10)
+    private points: number = this.getPoints()
 
     increase() {
+        this.points = this.getPoints()
         this.score += this.points
     }
     decrease() {
+        this.points = this.getPoints()
         this.score -= this.points
     }
 
-    getPoints(min: number, max: number): number {
+    getPoints(): number {
+        const min = 1
+        const max = 10
         return Math.floor(Math.random() * (max - min) + min)
     }
 
@@ -25,8 +29,11 @@ class Points {
 
 class Game {
     private cards: Card[]
+    public myScore: number // review
 
-    constructor() {
+    constructor(score: Points) {
+        this.myScore = score.currentScore
+
         this.cards = this.getDeck(6, 10)
     }
 
@@ -85,5 +92,8 @@ class Game {
 
 }
 
-export const game = new Game()
 export let score = new Points()
+
+export const game = new Game(score)
+
+// екземпляр передать
