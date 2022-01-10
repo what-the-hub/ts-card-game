@@ -9,6 +9,7 @@ class Points {
         this.points = this.getPoints()
         this.score += this.points
     }
+
     decrease() {
         this.points = this.getPoints()
         this.score -= this.points
@@ -17,12 +18,14 @@ class Points {
     getPoints(): number {
         const min = 1
         const max = 10
+
         return Math.floor(Math.random() * (max - min) + min)
     }
 
     get currentScore() {
         return this.score
     }
+
     get currentPoints() {
         return this.points
     }
@@ -76,6 +79,7 @@ class Game {
             new DecreaseCard(this.getRandomSymbol()),
             new EffectCard(this.getRandomSymbol()),
         ]
+
         return cards[Math.floor(Math.random() * cards.length)]
     }
 
@@ -87,6 +91,7 @@ class Game {
         for (let i = 0; i < cardsCounter; i++) {
             cards.push(this.getRandomCard())
         }
+
         return cards
     }
 }
