@@ -30,12 +30,24 @@ class Points {
 
 class Game {
     private cards: Card[]
-    public myScore: number // review
+    public score: Points
 
     constructor(score: Points) {
-        this.myScore = score.currentScore
+        this.score = score
+        this.cards = this.getDeck()
+    }
 
-        this.cards = this.getDeck(6, 10)
+    private checkActiveCards(currentSymbol: string): Card[] {
+        let activeCards: Card[] = []
+        this.cards = this.cards.filter((el: Card) => {
+            if (el.symbol !== currentSymbol) {
+                return el
+            } else {
+                activeCards.push(el)
+            }
+        })
+
+        return activeCards || null
     }
 
     public run(symbol: string) {
@@ -43,23 +55,15 @@ class Game {
             console.log(this.cards)
         }
 
-        let activeCads: Card[] = []
-        this.cards = this.cards.filter((el: Card) => {
-            if (el.symbol !== symbol) {
-                return el
-            } else {
-                activeCads.push(el)
-            }
-        })
-
-        if (activeCads) {
-            activeCads.forEach((el) => {
+        const activeCards = this.checkActiveCards(symbol)
+        if (activeCards) {
+            activeCards.forEach((el) => {
                 el.effect()
             })
         }
 
         console.log('----------')
-        return `TOTAL SCORE: ${score.currentScore}`
+        return `TOTAL SCORE: ${this.score.currentScore}`
     }
 
     public getRandomSymbol(): string {
@@ -75,7 +79,9 @@ class Game {
         return cards[Math.floor(Math.random() * cards.length)]
     }
 
-    private getDeck(min: number, max: number): Card[] {
+    private getDeck(): Card[] {
+        const min = 6
+        const max = 10
         const cards: Card[] = []
         const cardsCounter: number = Math.floor(Math.random() * (max - min) + min)
         for (let i = 0; i < cardsCounter; i++) {
@@ -83,11 +89,7 @@ class Game {
         }
         return cards
     }
-
 }
 
-export let score = new Points()
 
-export const game = new Game(score)
-
-// екземпляр передать
+export const game = new Game(new Points())

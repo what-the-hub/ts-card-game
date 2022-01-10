@@ -1,4 +1,4 @@
-import {score, game} from "./GameClasses";
+import { game} from "./GameClasses";
 
 export abstract class Card {
     protected constructor(protected cardSymbol: string) {}
@@ -41,9 +41,9 @@ export class IncreaseCard extends Card {
     }
 
     private increasePoints() {
-        score.increase()
-        console.log(`|${this.symbol}| card INCREASED ${score.currentPoints} points`)
-        console.log(`Total score: ${score.currentScore}`)
+        game.score.increase()
+        console.log(`|${this.symbol}| card INCREASED ${game.score.currentPoints} points`)
+        console.log(`Total score: ${game.score.currentScore}`)
     }
 }
 
@@ -57,8 +57,8 @@ export class DecreaseCard extends Card {
     }
 
     private decreasePoints() {
-        score.decrease()
-        console.log(`|${this.symbol}| card DECREASED ${score.currentPoints} points`)
-        console.log(`Total score: ${score.currentScore}`)
+        game.score.decrease()
+        console.log(`|${this.symbol}| card DECREASED ${game.score.currentPoints} points`)
+        console.log(`Total score: ${game.score.currentScore}`)
     }
 }
