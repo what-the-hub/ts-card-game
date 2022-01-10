@@ -1,4 +1,5 @@
 import {Card, DecreaseCard, EffectCard, IncreaseCard} from "./CardsClasses";
+import {Symbols} from "./types";
 
 class Points {
     private score: number = 0
@@ -42,7 +43,6 @@ class Game {
             console.log(this.cards)
         }
 
-        symbol = symbol.toUpperCase()
         let activeCads: Card[] = []
         this.cards = this.cards.filter((el: Card) => {
             if (el.symbol !== symbol) {
@@ -63,12 +63,6 @@ class Game {
     }
 
     public getRandomSymbol(): string {
-        enum Symbols {
-            'A' = 0,
-            'B' = 1,
-            'C' = 2
-        }
-
         return Symbols[Math.floor(Math.random() * 3)]
     }
 

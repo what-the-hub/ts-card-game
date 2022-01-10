@@ -1,6 +1,6 @@
 import {game} from "./GameClasses";
 
-console.log(game.run('b'))
+console.log(game.run('B'))
 
 
 
