@@ -1,1 +1,6 @@
-console.log('init commit')
+import {game} from "./GameClasses";
+
+console.log(game.run('B'))
+
+
+
