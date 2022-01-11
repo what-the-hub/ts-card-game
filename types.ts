@@ -1,5 +1,6 @@
 export enum Symbols {
-    'A' = 0,
-    'B' = 1,
-    'C' = 2
+    A = 'A',
+    B = 'B',
+    C = 'C'
 }
+

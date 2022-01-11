@@ -1,7 +1,8 @@
 import {game} from "./GameClasses";
+import {Symbols} from "./types";
 
 export abstract class Card {
-    protected constructor(protected cardSymbol: string) {
+    protected constructor(protected cardSymbol: Symbols) {
     }
 
     get symbol() {
@@ -12,7 +13,7 @@ export abstract class Card {
 }
 
 export class CallCard extends Card {
-    constructor(protected cardSymbol: string) {
+    constructor(protected cardSymbol: Symbols) {
         super(cardSymbol);
     }
 
@@ -30,7 +31,7 @@ export class CallCard extends Card {
 }
 
 export class IncreaseCard extends Card {
-    constructor(protected cardSymbol: string) {
+    constructor(protected cardSymbol: Symbols) {
         super(cardSymbol);
     }
 
@@ -46,7 +47,7 @@ export class IncreaseCard extends Card {
 }
 
 export class DecreaseCard extends Card {
-    constructor(protected cardSymbol: string) {
+    constructor(protected cardSymbol: Symbols) {
         super(cardSymbol);
     }
 

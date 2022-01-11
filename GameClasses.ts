@@ -69,8 +69,9 @@ class Game {
         return `TOTAL SCORE: ${this.score.currentScore}`
     }
 
-    public getRandomSymbol(): string {
-        return Symbols[Math.floor(Math.random() * 3)]
+    public getRandomSymbol(): Symbols {
+        const symbolsValues = [Symbols.A, Symbols.B, Symbols.C]
+        return symbolsValues[Math.floor(Math.random() * symbolsValues.length)]
     }
 
     private getRandomCard(): Card {
